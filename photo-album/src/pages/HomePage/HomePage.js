@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from "react";
-import Footer from '../../components/Footer/Footer';
-import PhotoAlbum from "react-photo-album";
+import Footer from '../../components/Footer/Footer'
+import Pictures from "../Pictures/Pictures";
 import Pet from '../../assets/pets.jpeg';
 import Family from '../../assets/family.jpeg';
+import { useNavigate } from 'react-router-dom';
+
 import './HomePage.css';
 
 const HomePage = () => {
+    const navigate = useNavigate();
+
     const openFolder = () => {
+        navigate('/pictures');
         console.log('Handler to open folder ');
+        
     }
 
-    const photos = [
-        { src: "/images/family.jpeg", width: 800, height: 600 },
-        { src: "/images/pets.jpeg", width: 800, height: 600 },
-        { src: "/images/lion.jpg", width: 800, height: 600 },
-        
-    ];
     return (
         <div className="homepage">
             <header className="header">My albums</header>
             <div className="container" 
-            // onClick={()=> openFolder()}
+            onClick={()=> openFolder()}
             >
                 <div className="container-album">
                     <label>Family</label>
@@ -40,9 +40,7 @@ const HomePage = () => {
                 </div>
                 
             </div>
-            <div className="photos">
-                <PhotoAlbum  layout="rows" photos={photos} />
-            </div>
+            <Pictures />
             <Footer />
         </div>
     )
