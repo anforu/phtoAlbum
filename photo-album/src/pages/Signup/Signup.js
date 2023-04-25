@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSignup } from "../../hooks/useSignup";
 import './Signup.css'
 
 const Signup = () => {
@@ -8,8 +9,10 @@ const Signup = () => {
     const [displayName, setDisplayName] = useState('');
 
     const handleSubmit = (e) => {
-      console.log(email, password, displayName)
+        e.preventDefault()
+        signup(email, password, displayName)
     }
+    const { signup, isPending, error} = useSignup()
 
     return (
         <form onSubmit={handleSubmit} className="signup-form">
@@ -38,7 +41,9 @@ const Signup = () => {
           value={displayName}
           />
         </label>
-        <button className="btn">Signup</button>
+        {!isPending && <button className="btn">Signup</button>}
+        {isPending && <button className="btn" disabled>loading</button>}
+        { error && <p>{error}</p>}
       </form>
     )
 }

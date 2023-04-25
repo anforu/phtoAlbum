@@ -27,6 +27,25 @@
     <title>React App</title>
   </head>
   <body>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-app.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+    
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyCzO2y4ON65ATOSdaODgRcyAcOOaDM65gA",
+        authDomain: "photoalbum-220c2.firebaseapp.com",
+        projectId: "photoalbum-220c2",
+        storageBucket: "photoalbum-220c2.appspot.com",
+        messagingSenderId: "431118669323",
+        appId: "1:431118669323:web:1e05d43f8d2792d7f3190e"
+      };
+    
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+    </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--
