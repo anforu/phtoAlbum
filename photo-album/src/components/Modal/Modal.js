@@ -30,9 +30,7 @@ const Modal = props => {
           </div>
           <div className="modal-body">{props.children}</div>
           <div className="modal-footer">
-            <button onClick={props.onClose} className="button">
-              Close
-            </button>
+            <button onClick={props.onClose} className="button">X</button>
           </div>
         </div>
       </div>

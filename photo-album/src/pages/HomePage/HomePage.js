@@ -10,39 +10,51 @@ import './HomePage.css';
 const HomePage = () => {
     const navigate = useNavigate();
     const [show, setShow] = useState(false)
+    const [list, setList] = useState(['Add New Album']);
+    const [albumNames, setAlbumNames] = useState('')
 
     const openFolder = () => {
         navigate('/pictures');
-        console.log('Handler to open folder ');
+    }
 
+    const addFolders = (name) => {
+        let tempArr = list;
+        tempArr.push(name);//push the value in the new variable
+        setList(tempArr);//set the value in the state[]
+        setAlbumNames('') //clean input
+        setShow(false)//hide popup
     }
 
     return (
         <div className="homepage">
             <header className="header">My albums</header>
-            <div className="container"
-                onClick={() => openFolder()}
-            >
-                <div className="container-album">
-                    <label>Family</label>
-                    <img src={Pet} alt="photo" width="100" height="100" />
-                </div>
-                <div className="container-album">
-                    <label>Pets</label>
-                    <img src={Family} alt="photo" width="100" height="100" />
-                </div>
-                <div className="container-album">
-                    <label>Family</label>
-                    <img src={Pet} alt="photo" width="100" height="100" />
-                </div>
-                <div className="container-album">
-                    <label>New Album</label>
-                    <img src={Family} alt="photo" width="100" height="100" />
-                </div>
-
+            <div className="container" >
+                {list.map((album, index) => {
+                    return (
+                        <div className="container-album" key={index}
+                            onClick={() => { index !== 0 ? openFolder() : setShow(true) }}>
+                            <label>{album}</label>
+                            <img src={Pet} alt="photo" width="100" height="100" />
+                        </div>
+                    )
+                })
+                }
             </div>
-            <button onClick={() => setShow(true)}>Modal</button>
-            <Modal title='Title modal' show={show} onClose={() => setShow(false)}>Content modal </Modal>
+
+            <Modal title='Title modal' show={show} onClose={() => setShow(false)}>
+                <div className="container-input">
+                    <label>Type a name:</label>
+                    <input
+                        value={albumNames}
+                        onChange={(e) => {
+                            setAlbumNames(e.target.value)
+                        }
+                        }
+                        placeholder="Name"
+                    />
+                    <button onClick={() => addFolders(albumNames)}>Add</button>
+                </div>
+            </Modal>
             <Pictures />
             <Footer />
         </div>
