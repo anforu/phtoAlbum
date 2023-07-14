@@ -1,4 +1,9 @@
 import { useState } from "react";
+import { storage } from "../../firebase/config";
+//import {ref, uploadBytes } from "firebase/storage"
+import {v4} from 'uuid'
+
+
 import Lightbox from "yet-another-react-lightbox";
 import PhotoAlbum from "react-photo-album";
 import "yet-another-react-lightbox/styles.css";
@@ -8,7 +13,16 @@ import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
 import './Pictures.css'
+
 const Pictures = () => {
+    const [imageUpload, setImageUpload] = useState(null);
+    const uploadImage = () => {
+        if(imageUpload == null) return;
+       // const imageRef = ref(storage, `images/${imageUpload.name + v4}`)
+       
+    };
+    
+
     const photos = [
         { src: "/images/family.jpeg", width: 800, height: 600 },
         { src: "/images/pets.jpeg", width: 800, height: 600 },
@@ -21,6 +35,14 @@ const Pictures = () => {
     return (
         <>
             <div className="pictures">
+                <div>
+                    <input type="file"
+                        onChange={(event) => {
+                            setImageUpload(event.target.files[0])
+                        }} />
+                    <button onClick={uploadImage}> Upload Image</button>
+                </div>
+
                 <PhotoAlbum photos={photos} layout="rows" targetRowHeight={150} onClick={({ index }) => setIndex(index)} />
             </div>
             <Lightbox
