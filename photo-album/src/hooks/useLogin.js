@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { projectAuth } from "../firebase/config"
+import { signInWithEmailAndPassword } from 'firebase/auth'
 import { useAuthContext } from "./useAuthContext"
 
 export const useLogin = () => {
@@ -14,7 +15,9 @@ export const useLogin = () => {
 
         //sign to user out
         try {
-            const res = await projectAuth.signInWithEmailAndPassword(email, password)
+            const res = await signInWithEmailAndPassword(projectAuth, email, password).catch(
+                (err) => console.log(err)
+              );
             //dispatch login action
             dispatch({ type: 'LOGIN', payload: res.user })
             //update state

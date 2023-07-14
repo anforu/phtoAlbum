@@ -55,7 +55,7 @@ const HomePage = () => {
                     <button onClick={() => addFolders(albumNames)}>Add</button>
                 </div>
             </Modal>
-            <Pictures />
+
             <Footer />
         </div>
     )

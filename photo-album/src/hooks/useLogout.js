@@ -16,7 +16,9 @@ export const useLogout = () => {
 
         //sign to user out
         try {
-            await projectAuth.signOut()
+            await projectAuth.signOut().catch(
+                (err) => console.log(err)
+              );
             //dispatch logout action
             dispatch({ type: 'LOGOUT' })
 
