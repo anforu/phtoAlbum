@@ -1,9 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { storage } from "../../firebase/config";
-import {ref, uploadBytes } from "firebase/storage"
-import {v4} from 'uuid'
-
-
+import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage"
+import { v4 } from 'uuid'
 import Lightbox from "yet-another-react-lightbox";
 import PhotoAlbum from "react-photo-album";
 import "yet-another-react-lightbox/styles.css";
@@ -16,23 +14,41 @@ import './Pictures.css'
 
 const Pictures = () => {
     const [imageUpload, setImageUpload] = useState(null);
+    const [imageList, setImageList] = useState([])
+    const imageListRef = ref(storage, "images/")
+
     const uploadImage = () => {
-        if(imageUpload == null) return;
-       const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
-       uploadBytes(imageRef, imageUpload).then(() => {
-        alert('Image Uploaded')
-       }) 
+        if (imageUpload == null) return;
+        const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
+        uploadBytes(imageRef, imageUpload).then((snapshot) => {
+            getDownloadURL(snapshot.ref).then((url) => {
+                setImageList((prev) => [...prev, url])
+            })
+        })
     };
-    
 
-    const photos = [
-        { src: "/images/family.jpeg", width: 800, height: 600 },
-        { src: "/images/pets.jpeg", width: 800, height: 600 },
-        { src: "/images/lion.jpg", width: 800, height: 600 },
+    useEffect(() => {
+        listAll(imageListRef).then((response) => {
+            response.items.forEach((item) => {
+                getDownloadURL(item).then((url) => {
+                    setImageList((prev) => [...prev, url])
+                })
+            })
+        })
+    }, [])
 
-    ];
-    const slides = photos.map(({ src, width, height, images }) => ({ src, width, height, srcSet: images }));
+
+    var dup_array = imageList.slice();
+    const newPhotosUpdated = dup_array.map((element, index) => {
+        let photo = { src: element, width: 800, height: 600, id: index }
+        return photo
+    })
+
+    console.log('FINAL CLONED: ', newPhotosUpdated)
+
+    const slides = newPhotosUpdated.map(({ src, width, height, images }) => ({ src, width, height, srcSet: images }));
     const [index, setIndex] = useState(-1);
+
 
     return (
         <>
@@ -45,8 +61,9 @@ const Pictures = () => {
                     <button onClick={uploadImage}> Upload Image</button>
                 </div>
 
-                <PhotoAlbum photos={photos} layout="rows" targetRowHeight={150} onClick={({ index }) => setIndex(index)} />
+                <PhotoAlbum photos={newPhotosUpdated} layout="rows" targetRowHeight={150} onClick={({ index }) => setIndex(index)} />
             </div>
+
             <Lightbox
                 slides={slides}
                 open={index >= 0}
