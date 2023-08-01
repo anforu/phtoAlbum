@@ -1,26 +1,50 @@
 import React, { useEffect, useState } from "react";
 import Footer from '../../components/Footer/Footer'
-import Pictures from "../Pictures/Pictures";
 import Pet from '../../assets/pets.jpeg';
-import Family from '../../assets/family.jpeg';
 import { useNavigate } from 'react-router-dom';
 import Modal from "../../components/Modal/Modal";
 import './HomePage.css';
+import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage"
+import { useParams } from "react-router-dom";
+import { storage } from "../../firebase/config";
 
 const HomePage = () => {
     const navigate = useNavigate();
     const [show, setShow] = useState(false)
-    const [list, setList] = useState(['Add New Album']);
     const [albumNames, setAlbumNames] = useState('')
 
-    const openFolder = () => {
-        navigate('/pictures');
+    const [folderList, setFolderList] = useState(['Add New Album'])
+
+    const listRef = ref(storage);
+
+    const [nameUpdated, setNameUpdated] = useState([])
+
+    useEffect(() => {
+        return fetchData()
+    }, [])
+
+    const fetchData = () => {
+        let arrayHere = ['Add New Album']
+        listAll(listRef).then((response) => {
+            console.log('RESPONSE: ', response)
+            response.prefixes.map((value) => {
+                console.log('VALUE: ', value)
+                let names = value._location.path_
+                arrayHere.push(names)
+                 setFolderList(names)
+                 return setNameUpdated(arrayHere)
+            }) 
+         }).catch(e => console.log('Error trying to render the array of folders ', e))
+    }
+
+    const openFolder = (name, position) => {
+        navigate(`/pictures/${name}`);
     }
 
     const addFolders = (name) => {
-        let tempArr = list;
+        let tempArr = nameUpdated;
         tempArr.push(name);//push the value in the new variable
-        setList(tempArr);//set the value in the state[]
+        setNameUpdated(tempArr)//set the value in the state[]
         setAlbumNames('') //clean input
         setShow(false)//hide popup
     }
@@ -29,10 +53,10 @@ const HomePage = () => {
         <div className="homepage">
             <header className="header">My albums</header>
             <div className="container" >
-                {list.map((album, index) => {
+                {nameUpdated.map((album, index) => {
                     return (
                         <div className="container-album" key={index}
-                            onClick={() => { index !== 0 ? openFolder() : setShow(true) }}>
+                            onClick={() => { index !== 0 ? openFolder(album, index) : setShow(true) }}>
                             <label>{album}</label>
                             <img src={Pet} alt="photo" width="100" height="100" />
                         </div>

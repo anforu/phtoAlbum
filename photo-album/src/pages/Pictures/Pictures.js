@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { storage } from "../../firebase/config";
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage"
 import { v4 } from 'uuid'
@@ -13,16 +14,19 @@ import "yet-another-react-lightbox/plugins/thumbnails.css";
 import './Pictures.css'
 
 const Pictures = () => {
+    const params = useParams();//get the params
+    const paramName = params.name //current param
     const [imageUpload, setImageUpload] = useState(null);
     const [imageList, setImageList] = useState([])
-    const imageListRef = ref(storage, "images/")
-
+    
+    const imageListRef = ref(storage, `${paramName} + '/'`) //create the ref with the current name of param to create the folder
+    
     const uploadImage = () => {
         if (imageUpload == null) return;
-        const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
+        const imageRef = ref(storage, `${paramName}/${imageUpload.name + v4()}`); //save the image into folder created
         uploadBytes(imageRef, imageUpload).then((snapshot) => {
             getDownloadURL(snapshot.ref).then((url) => {
-                setImageList((prev) => [...prev, url])
+                setImageList((prev) => [...prev, url])//save the array of images into state
             })
         })
     };
@@ -37,18 +41,15 @@ const Pictures = () => {
         })
     }, [])
 
-
     var dup_array = imageList.slice();
-    const newPhotosUpdated = dup_array.map((element, index) => {
+
+    const newPhotosUpdated = dup_array.map((element, index) => { //const with the new array structure 
         let photo = { src: element, width: 800, height: 600, id: index }
         return photo
     })
 
-    console.log('FINAL CLONED: ', newPhotosUpdated)
-
     const slides = newPhotosUpdated.map(({ src, width, height, images }) => ({ src, width, height, srcSet: images }));
     const [index, setIndex] = useState(-1);
-
 
     return (
         <>
