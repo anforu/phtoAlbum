@@ -18,32 +18,33 @@ const Pictures = () => {
     const paramName = params.name //current param
     const [imageUpload, setImageUpload] = useState(null);
     const [imageList, setImageList] = useState([])
-    
-    const imageListRef = ref(storage, `${paramName} + '/'`) //create the ref with the current name of param to create the folder
-    
+
+    /**Function responsable to load the images to the firebase and a local state */
     const uploadImage = () => {
         if (imageUpload == null) return;
         const imageRef = ref(storage, `${paramName}/${imageUpload.name + v4()}`); //save the image into folder created
-        uploadBytes(imageRef, imageUpload).then((snapshot) => {
-            getDownloadURL(snapshot.ref).then((url) => {
+        uploadBytes(imageRef, imageUpload).then((snapshot) => {//upload the image using the ref
+            getDownloadURL(snapshot.ref).then((url) => {//download the image
                 setImageList((prev) => [...prev, url])//save the array of images into state
             })
         })
     };
 
-    useEffect(() => {
-        listAll(imageListRef).then((response) => {
-            response.items.forEach((item) => {
+    const fetchImages = () => {
+        listAll(ref(storage, paramName)).then((data) => {
+            data.items.map(item => {
                 getDownloadURL(item).then((url) => {
-                    setImageList((prev) => [...prev, url])
+                    setImageList((prev) => [...prev, url])//save the array of images into state
                 })
             })
         })
-    }, [])
+    }
 
-    var dup_array = imageList.slice();
+    useEffect(() => {
+        fetchImages()
+    }, []);
 
-    const newPhotosUpdated = dup_array.map((element, index) => { //const with the new array structure 
+    const newPhotosUpdated = imageList.slice().map((element, index) => { //declare the new array structure 
         let photo = { src: element, width: 800, height: 600, id: index }
         return photo
     })

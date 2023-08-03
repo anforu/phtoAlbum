@@ -24,15 +24,13 @@ const HomePage = () => {
     }, [])
 
     const fetchData = () => {
-        let arrayHere = ['Add New Album']
+        let initialFolder = ['Add New Album']
         listAll(listRef).then((response) => {
-            console.log('RESPONSE: ', response)
             response.prefixes.map((value) => {
-                console.log('VALUE: ', value)
                 let names = value._location.path_
-                arrayHere.push(names)
+                initialFolder.push(names)
                  setFolderList(names)
-                 return setNameUpdated(arrayHere)
+                 return setNameUpdated(initialFolder)
             }) 
          }).catch(e => console.log('Error trying to render the array of folders ', e))
     }
