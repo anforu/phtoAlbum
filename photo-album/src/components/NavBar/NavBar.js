@@ -21,7 +21,7 @@ export default function Navbar() {
                     <>
                         <li>hello, {user.displayName}</li>
                         <li><Link to="/home">Home</Link></li>
-                        <li><Link to="/pictures/">Home</Link></li>
+                        <li><Link to="/pictures/">Pictures</Link></li>
                         <li>
                             <button className='btn' onClick={logout}>Logout</button>
                         </li>

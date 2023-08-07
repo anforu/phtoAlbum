@@ -12,13 +12,14 @@ import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
 import './Pictures.css'
+import Spinner from '../../components/Spinner/Spinner'
 
 const Pictures = () => {
     const params = useParams();//get the params
     const paramName = params.name //current param
     const [imageUpload, setImageUpload] = useState(null);
     const [imageList, setImageList] = useState([])
-
+    const [loading, setLoading] = useState(false)
     /**Function responsable to load the images to the firebase and a local state */
     const uploadImage = () => {
         if (imageUpload == null) return;
@@ -31,13 +32,16 @@ const Pictures = () => {
     };
 
     const fetchImages = () => {
+        setLoading(true)
         listAll(ref(storage, paramName)).then((data) => {
             data.items.map(item => {
                 getDownloadURL(item).then((url) => {
                     setImageList((prev) => [...prev, url])//save the array of images into state
                 })
             })
+            setLoading(false)
         })
+
     }
 
     useEffect(() => {
@@ -54,26 +58,30 @@ const Pictures = () => {
 
     return (
         <>
-            <div className="pictures">
-                <div>
-                    <input type="file"
-                        onChange={(event) => {
-                            setImageUpload(event.target.files[0])
-                        }} />
-                    <button onClick={uploadImage}> Upload Image</button>
-                </div>
+            { loading ? (<Spinner visible={loading} />) :
+                (<div>
+                    <div className="pictures">
+                        <div>
+                            <input type="file"
+                                onChange={(event) => {
+                                    setImageUpload(event.target.files[0])
+                                }} />
+                            <button onClick={uploadImage}> Upload Image</button>
+                        </div>
 
-                <PhotoAlbum photos={newPhotosUpdated} layout="rows" targetRowHeight={150} onClick={({ index }) => setIndex(index)} />
-            </div>
+                        <PhotoAlbum photos={newPhotosUpdated} layout="rows" targetRowHeight={150} onClick={({ index }) => setIndex(index)} />
+                    </div>
 
-            <Lightbox
-                slides={slides}
-                open={index >= 0}
-                index={index}
-                close={() => setIndex(-1)}
-                // enable optional lightbox plugins
-                plugins={[Fullscreen, Slideshow, Thumbnails, Zoom]}
-            />
+                    <Lightbox
+                        slides={slides}
+                        open={index >= 0}
+                        index={index}
+                        close={() => setIndex(-1)}
+                        // enable optional lightbox plugins
+                        plugins={[Fullscreen, Slideshow, Thumbnails, Zoom]}
+                    />
+                </div>)
+            }
         </>
     );
 }
