@@ -1,3 +1,8 @@
 .pictures {
     margin: 20px;
 }
+.add-button {
+    background-image:'../../assets/add.png';
+    background-repeat:no-repeat;
+   background-position:left top;  padding-left:15px;
+}

@@ -13,7 +13,7 @@ import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
 import './Pictures.css'
 import Spinner from '../../components/Spinner/Spinner'
-
+import Add from '../../assets/add.png'
 const Pictures = () => {
     const params = useParams();//get the params
     const paramName = params.name //current param
@@ -56,13 +56,25 @@ const Pictures = () => {
     const slides = newPhotosUpdated.map(({ src, width, height, images }) => ({ src, width, height, srcSet: images }));
     const [index, setIndex] = useState(-1);
 
+    const handlerAddImage = () => {
+
+    }
     return (
         <>
-            { loading ? (<Spinner visible={loading} />) :
+            {loading ? (<Spinner visible={loading} />) :
                 (<div>
                     <div className="pictures">
+
+                        <div class="image-upload">
+                            <label for="file-input">
+                                <img src={Add} width={50}/>
+                            </label>
+
+                            <input id="file-input" type="file" />
+                        </div>
+
                         <div>
-                            <input type="file"
+                            <input className="add-button" type="file"
                                 onChange={(event) => {
                                     setImageUpload(event.target.files[0])
                                 }} />
