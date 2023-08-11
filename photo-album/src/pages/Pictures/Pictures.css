@@ -1,8 +1,16 @@
 .pictures {
     margin: 20px;
 }
-.add-button {
-    background-image:'../../assets/add.png';
-    background-repeat:no-repeat;
-   background-position:left top;  padding-left:15px;
+
+.container-load-images {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.images {
+    background: #F4F5FF;
+    padding: 40px;
 }

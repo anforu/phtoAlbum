@@ -13,7 +13,9 @@ import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
 import './Pictures.css'
 import Spinner from '../../components/Spinner/Spinner'
-import Add from '../../assets/add.png'
+import UploadButton from "../../components/UploadButton/UploadButton";
+import DropContainer from "../../components/DropContainer/DropContainer"
+
 const Pictures = () => {
     const params = useParams();//get the params
     const paramName = params.name //current param
@@ -22,13 +24,15 @@ const Pictures = () => {
     const [loading, setLoading] = useState(false)
     /**Function responsable to load the images to the firebase and a local state */
     const uploadImage = () => {
-        if (imageUpload == null) return;
+        if (imageUpload == null) return; //if is empty nothing happened
+        setLoading(true)
         const imageRef = ref(storage, `${paramName}/${imageUpload.name + v4()}`); //save the image into folder created
         uploadBytes(imageRef, imageUpload).then((snapshot) => {//upload the image using the ref
             getDownloadURL(snapshot.ref).then((url) => {//download the image
                 setImageList((prev) => [...prev, url])//save the array of images into state
             })
         })
+        setLoading(false)
     };
 
     const fetchImages = () => {
@@ -56,32 +60,21 @@ const Pictures = () => {
     const slides = newPhotosUpdated.map(({ src, width, height, images }) => ({ src, width, height, srcSet: images }));
     const [index, setIndex] = useState(-1);
 
-    const handlerAddImage = () => {
-
-    }
     return (
         <>
-            {loading ? (<Spinner visible={loading} />) :
+            {loading ? (<Spinner type='triangle' visible={loading} />) :
                 (<div>
                     <div className="pictures">
-
-                        <div class="image-upload">
-                            <label for="file-input">
-                                <img src={Add} width={50}/>
-                            </label>
-
-                            <input id="file-input" type="file" />
+                        <div className="container-load-images">
+                            <DropContainer onChange={(event) => {
+                                setImageUpload(event.target.files[0])
+                            }} />
+                            <UploadButton title="Upload Image"
+                                onClick={uploadImage} />
                         </div>
-
-                        <div>
-                            <input className="add-button" type="file"
-                                onChange={(event) => {
-                                    setImageUpload(event.target.files[0])
-                                }} />
-                            <button onClick={uploadImage}> Upload Image</button>
+                        <div className="images">
+                            <PhotoAlbum photos={newPhotosUpdated} layout="rows" targetRowHeight={150} onClick={({ index }) => setIndex(index)} />
                         </div>
-
-                        <PhotoAlbum photos={newPhotosUpdated} layout="rows" targetRowHeight={150} onClick={({ index }) => setIndex(index)} />
                     </div>
 
                     <Lightbox

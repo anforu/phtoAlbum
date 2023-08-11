@@ -52,7 +52,7 @@ const HomePage = () => {
 
     return (
         <>
-            {loading ? (<Spinner visible={loading} />) :
+            {loading ? (<Spinner type='triangle' visible={loading} />) :
                 (<div className="homepage">
                     <header className="header">My albums</header>
                     <div className="container" >

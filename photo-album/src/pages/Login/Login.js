@@ -26,7 +26,7 @@ const Login = () => {
 
   return (
     <>
-      {loading ? (<Spinner visible={loading} />) :
+      {loading ? (<Spinner type='triangle' visible={loading} />) :
         (<form onSubmit={handleSubmit} className="login-form">
           <h2>Login</h2>
           <label>

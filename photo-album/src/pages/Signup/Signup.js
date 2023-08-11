@@ -20,7 +20,7 @@ const Signup = () => {
 
   return (
     <>
-      {loading ? (<Spinner visible={loading} />) :
+      {loading ? (<Spinner type='triangle' visible={loading} />) :
         (<form onSubmit={handleSubmit} className="signup-form">
           <h2>Signup</h2>
           <label>
