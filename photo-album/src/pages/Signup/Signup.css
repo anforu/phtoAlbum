@@ -1,19 +1,101 @@
-.signup-form {
-    max-width: 360px;
-    margin: 60px auto;
-    padding: 20px;
+.signup {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100vh;
+  background: url("../../assets/plant.jpg");
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-top: 20px;
 }
-.signup-form label {
-    display: block;
-    margin: 30px auto;
+
+@media (min-width:768px) {
+  .signup {
+    align-items: center;
+    padding-top: 1px;
+  }
 }
-.signup-form span {
-    display: block;
-    margin-bottom: 6px;
+
+.container-image-form-signup {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  background: white;
+  margin-top: 10%;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 100px;
+  border-radius: 25px;
+
 }
-.signup-form input {
-    padding: 8px 6px;
-    font-size: 1em;
-    color: #777;
+
+@media (min-width:768px) {
+  .container-image-form-signup {
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
     width: 100%;
+    height: 500px;
+    margin-left: 20%;
+    margin-right: 20%;
+    border-radius: 20px;
+  }
 }
+
+@media (min-width:425px) {
+  .container-image-form-signup {
+    margin-left: 15%;
+    margin-right: 15%;
+  }
+}
+
+.photo-signup {
+  display: flex;
+  width: 100%;
+  height: 190px;
+  justify-content: center;
+}
+
+@media (min-width:768px) {
+  .photo-signup {
+    justify-content: left;
+    width: 50%;
+    height: 350px;
+  }
+}
+
+.image-signup {
+  height: 190px;
+  width: 100%;
+  border-radius: 25px 25px 0 0;
+}
+
+@media (min-width:768px) {
+  .image-signup {
+    width: 100%;
+    height: 350px;
+    border-radius: 20px 0px 0px 20px;
+  }
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0px 15px 0px 25px;
+  width: 80%;
+}
+
+@media (min-width:768px) {
+  .signup-form {
+    width: 50%;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0px 15px 0px 25px;
+  }
+}
+

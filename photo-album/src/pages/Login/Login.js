@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useLogin } from "../../hooks/useLogin";
 import "./Login.css";
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../../components/Spinner/Spinner'
+import Album from '../../assets/familiar-album.jpeg'
+import Input from "../../components/Input/Input";
 
 const Login = () => {
 
@@ -27,30 +29,33 @@ const Login = () => {
   return (
     <>
       {loading ? (<Spinner type='triangle' visible={loading} />) :
-        (<form onSubmit={handleSubmit} className="login-form">
-          <h2>Login</h2>
-          <label>
-            <span>email: </span>
-            <input
-              type="email"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              placeholder="anye824@gmail.com"
-            />
-          </label>
-          <label>
-            <span>password: </span>
-            <input
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              placeholder="Qwerty1!"
-            />
-          </label>
-          {!isPending && <button className="btn">Login</button>}
-          {isPending && <button className="btn" disabled>loading</button>}
-          {error && <p>{error}</p>}
-        </form>)
+        (<div className="login">
+
+          <div className="container-image-form">
+
+
+            <div className="photo">
+              <img className="image" src={Album} />
+            </div>
+
+            <form onSubmit={handleSubmit} className="login-form">
+              <h2 className="no-margin-padding">Login</h2>
+
+              <Input title="Email"
+                type="email"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+              />
+              <Input title="Password" type="password"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password} />
+              {!isPending && <button className="btn">Login</button>}
+              {isPending && <button className="btn" disabled>loading</button>}
+              {error && <p>{error}</p>}
+            </form>
+
+          </div>
+        </div>)
       }
     </>
   )
