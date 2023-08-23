@@ -6,7 +6,7 @@ const UploadButton = props => {
     return (
         <button className="loadImage" onClick={props.onClick}>
             <img src={Add} width={50} />
-            <label className="title">{props.title}</label>
+            <label className="title-button">{props.title}</label>
         </button>
     )
 }

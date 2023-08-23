@@ -39,7 +39,7 @@
 }
 
 input[type=file] {
-    width: 350px;
+    width: 250px;
     max-width: 100%;
     color: #444;
     padding: 5px;
@@ -47,7 +47,11 @@ input[type=file] {
     border-radius: 10px;
     border: 1px solid #555;
 }
-
+@media (min-width:768px) {
+    input[type=file] {
+        width: 350px;
+    }
+}
 input[type=file]::file-selector-button {
     margin-right: 20px;
     border: none;

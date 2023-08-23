@@ -1,16 +1,28 @@
 .pictures {
-    margin: 20px;
+
 }
 
 .container-load-images {
     display: flex;
+    flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
     margin-top: 50px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
+}
+@media (min-width:768px) {
+    .container-load-images {
+        flex-direction: row;
+        margin-bottom: 50px;
+    }
 }
 
 .images {
     background: #F4F5FF;
+    padding: 10px;
+}
+@media (min-width:768px) {
+.images {
     padding: 40px;
+}
 }
