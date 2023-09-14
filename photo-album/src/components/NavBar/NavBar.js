@@ -12,7 +12,7 @@ export default function Navbar() {
             <ul>
                 {!user && (
                     <>
-                        <li className='title'>My NavBar</li>
+                        <li className='title'>My Photo Album</li>
                         <li><Link to="/">Login</Link></li>
                         <li><Link to="/signup">Signup</Link></li>
                     </>

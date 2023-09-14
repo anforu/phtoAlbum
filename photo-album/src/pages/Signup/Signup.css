@@ -7,7 +7,6 @@
   background-position: left center;
   background-repeat: no-repeat;
   background-size: cover;
-  padding-top: 20px;
 }
 
 @media (min-width:768px) {
@@ -23,10 +22,9 @@
   width: 100%;
   align-items: center;
   background: white;
-  margin-top: 10%;
   margin-left: 10%;
   margin-right: 10%;
-  margin-bottom: 50px;
+  margin-bottom: 140px;
   border-radius: 25px;
 }
 
@@ -43,12 +41,6 @@
   }
 }
 
-@media (min-width:425px) {
-  .container-image-form-signup {
-    margin-left: 15%;
-    margin-right: 15%;
-  }
-}
 
 .photo-signup {
   display: flex;

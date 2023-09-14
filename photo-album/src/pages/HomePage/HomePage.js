@@ -7,6 +7,7 @@ import './HomePage.css';
 import { ref, listAll } from "firebase/storage"
 import { storage } from "../../firebase/config";
 import Spinner from '../../components/Spinner/Spinner'
+import Header from "../../components/Header/Header";
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -35,7 +36,8 @@ const HomePage = () => {
                 return setNameUpdated(initialFolder)
             })
         }).catch(e => console.log('Error trying to render the array of folders ', e))
-
+        setLoading(false)
+        setNameUpdated(initialFolder)
     }
 
     const openFolder = (name, position) => {
@@ -54,7 +56,7 @@ const HomePage = () => {
         <>
             {loading ? (<Spinner type='triangle' visible={loading} />) :
                 (<div className="homepage">
-                    <header className="header">My albums</header>
+                    <Header />
                     <div className="container" >
                         {nameUpdated.map((album, index) => {
                             return (
