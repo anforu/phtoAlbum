@@ -5,6 +5,14 @@
 
     .title-button {
         cursor: pointer;
+        font-size: 16px;
+        padding: 20px;
+    }
+    @media (min-width:768px) {
+        .title-button {
+            padding: 15px;
+            font-size: 25px;
+        }
     }
 
     /* web styles */

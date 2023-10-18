@@ -3,7 +3,7 @@ import './Input.css'
 const Input = props => {
 
     return (
-        <div class="container-custom-input">
+        <div className="container-custom-input">
             <input
                 className='input'
                 type={props.type}

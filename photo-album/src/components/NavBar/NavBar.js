@@ -12,7 +12,7 @@ export default function Navbar() {
             <ul>
                 {!user && (
                     <>
-                        <li className='title'>My Photo Album</li>
+                        <li className='title'>Photos</li>
                         <li><Link to="/">Login</Link></li>
                         <li><Link to="/signup">Signup</Link></li>
                     </>
@@ -21,7 +21,6 @@ export default function Navbar() {
                     <>
                         <li>hello, {user.displayName}</li>
                         <li><Link to="/home">Home</Link></li>
-                        <li><Link to="/pictures/">Pictures</Link></li>
                         <li>
                             <button className='btn' onClick={logout}>Logout</button>
                         </li>
