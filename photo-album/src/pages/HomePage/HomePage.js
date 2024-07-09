@@ -28,12 +28,14 @@ const HomePage = () => {
         setLoading(true)
         let initialFolder = ['Add New Album']
         listAll(listRef).then((response) => {
+            setLoading(true)
             response.prefixes.map((value) => {
                 let names = value._location.path_
                 initialFolder.push(names)
                 setFolderList(names)
                 setLoading(false)
                 return setNameUpdated(initialFolder)
+
             })
         }).catch(e => console.log('Error trying to render the array of folders ', e))
         setLoading(false)
@@ -45,6 +47,7 @@ const HomePage = () => {
     }
 
     const addFolders = (name) => {
+        setLoading(true)
         let tempArr = nameUpdated;
         tempArr.push(name);//push the value in the new variable
         setNameUpdated(tempArr)//set the value in the state[]
@@ -54,39 +57,42 @@ const HomePage = () => {
 
     return (
         <>
-            {loading ? (<Spinner type='triangle' visible={loading} />) :
-                (<div className="homepage">
-                    <Header />
-                    <div className="container" >
-                        {nameUpdated.map((album, index) => {
-                            return (
-                                <div className="container-album" key={index}
-                                    onClick={() => { index !== 0 ? openFolder(album, index) : setShow(true) }}>
-                                    <label>{album}</label>
-                                    <img src={Pet} alt="photo" width="100" height="100" />
-                                </div>
-                            )
-                        })
-                        }
-                    </div>
+            (<div className="homepage">
+                <Header />
+                <div className="container" >
+                    {nameUpdated.map((album, index) => {
+                        return (
 
-                    <Modal title='Title modal' show={show} onClose={() => setShow(false)}>
-                        <div className="container-input">
-                            <label>Type a name:</label>
-                            <input
-                                value={albumNames}
-                                onChange={(e) => {
-                                    setAlbumNames(e.target.value)
+                            <div>
+                                {loading ? (<Spinner type='triangle' visible={loading} />) :
+                                    <div className="container-album" key={index}
+                                        onClick={() => { index !== 0 ? openFolder(album, index) : setShow(true) }}>
+                                        <label>{album}</label>
+                                        <img src={Pet} alt="photo" width="100" height="100" />
+                                    </div>
                                 }
-                                }
-                                placeholder="Name"
-                            />
-                            <button onClick={() => addFolders(albumNames)}>Add</button>
-                        </div>
-                    </Modal>
-                    <Footer />
-                </div>)
-            }
+                            </div>
+                        )
+                    })
+                    }
+                </div>
+
+                <Modal title='Title modal' show={show} onClose={() => setShow(false)}>
+                    <div className="container-input">
+                        <label>Type a name:</label>
+                        <input
+                            value={albumNames}
+                            onChange={(e) => {
+                                setAlbumNames(e.target.value)
+                            }
+                            }
+                            placeholder="Name"
+                        />
+                        <button onClick={() => addFolders(albumNames)}>Add</button>
+                    </div>
+                </Modal>
+                <Footer />
+            </div>)
         </>
     )
 }

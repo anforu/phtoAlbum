@@ -22,6 +22,7 @@ const Pictures = () => {
     const [imageUpload, setImageUpload] = useState(null);
     const [imageList, setImageList] = useState([])
     const [loading, setLoading] = useState(false)
+    
     /**Function responsable to load the images to the firebase and a local state */
     const uploadImage = () => {
         if (imageUpload == null) return; //if is empty nothing happened
@@ -39,17 +40,16 @@ const Pictures = () => {
         setLoading(true)
         listAll(ref(storage, paramName)).then((data) => {
             data.items.map(item => {
-                getDownloadURL(item).then((url) => {
+                return getDownloadURL(item).then((url) => {
                     setImageList((prev) => [...prev, url])//save the array of images into state
                 })
             })
             setLoading(false)
         })
-
     }
 
     useEffect(() => {
-        fetchImages()
+        fetchImages();
     }, []);
 
     const newPhotosUpdated = imageList.slice().map((element, index) => { //declare the new array structure 
@@ -62,21 +62,21 @@ const Pictures = () => {
 
     return (
         <>
-            {loading ? (<Spinner type='triangle' visible={loading} />) :
-                (<div>
-                    <div className="pictures">
-                        <div className="container-load-images">
-                            <DropContainer onChange={(event) => {
-                                setImageUpload(event.target.files[0])
-                            }} />
-                            <UploadButton title="Upload Image"
-                                onClick={uploadImage} />
-                        </div>
-                        <div className="images">
-                            <PhotoAlbum photos={newPhotosUpdated} layout="rows" targetRowHeight={150} onClick={({ index }) => setIndex(index)} />
-                        </div>
+            {/* {loading ? (<Spinner type='triangle' visible={loading} />) : */}
+            (<div>
+                <div className="pictures">
+                    <div className="container-load-images">
+                        <DropContainer onChange={(event) => {
+                            setImageUpload(event.target.files[0])
+                        }} />
+                        <UploadButton title="Upload Image"
+                            onClick={uploadImage} />
                     </div>
-
+                    <div className="images">
+                        <PhotoAlbum photos={newPhotosUpdated} layout="rows" targetRowHeight={150} onClick={({ index }) => setIndex(index)} />
+                    </div>
+                </div>
+                {loading ? (<Spinner type='triangle' visible={loading} />) :
                     <Lightbox
                         slides={slides}
                         open={index >= 0}
@@ -85,8 +85,9 @@ const Pictures = () => {
                         // enable optional lightbox plugins
                         plugins={[Fullscreen, Slideshow, Thumbnails, Zoom]}
                     />
-                </div>)
-            }
+                }
+            </div>)
+            {/* } */}
         </>
     );
 }

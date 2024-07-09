@@ -19,6 +19,7 @@
 .images {
     background: #F4F5FF;
     padding: 10px;
+    min-height: 200px;
 }
 
 @media (min-width:768px) {

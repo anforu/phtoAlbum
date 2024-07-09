@@ -12,8 +12,17 @@ body {
   font-family: 'Raleway', sans-serif;
   font-size: 1.6rem;
   line-height: 2;
+  margin: 0;
 }
 
+/*Variables*/
+:root {
+  --box-title-dsk: 19px;
+  --box-title-mob: 12px;
+  --background-box: lightgray;
+  --background-box-on: gray;
+
+}
 /*Globales*/
 h1, h2, h3 {
   font-family: 'Playfair Display', serif;

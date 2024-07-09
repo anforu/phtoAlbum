@@ -6,6 +6,7 @@
     width: 100%;
     font-weight: bold;
 }
+
 .homepage {
     display: flex;
     flex-direction: column;
@@ -20,6 +21,7 @@
     height: 700px;
     width: 100%;
 }
+
 @media (min-width:768px) {
     .container {
         width: 400px;
@@ -27,7 +29,7 @@
 }
 
 .container-album {
-    background: lightgray;
+    background: var(--background-box);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -36,7 +38,15 @@
     height: 200px;
     cursor: pointer;
     margin-top: 15px;
+    font-size: var(--box-title-dsk);
 }
+
+.container-album:is(:hover,:focus,:active) {
+    font-weight: bold;
+    background-color: var(--background-box-on);
+}
+
+
 @media (min-width:768px) {
     .container-album {
         width: 200px;
