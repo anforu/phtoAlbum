@@ -8,7 +8,7 @@ export default function Navbar() {
     const { user } = useAuthContext()
 
     return (
-        <nav className='navbar'>
+        <nav className={user ? 'navbar' : 'hideNav'}>
             <ul>
                 {!user && (
                     <>

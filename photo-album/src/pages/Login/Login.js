@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Spinner from '../../components/Spinner/Spinner'
 import Album from '../../assets/familiar-album.jpeg'
 import Input from "../../components/Input/Input";
-
+import Links from '../../components/Links/Links'
 const Login = () => {
 
   const [email, setEmail] = useState('anye824@gmail.com');
@@ -32,8 +32,6 @@ const Login = () => {
         (<div className="login">
 
           <div className="container-image-form">
-
-
             <div className="photo">
               <img className="image" src={Album} />
             </div>
@@ -52,8 +50,9 @@ const Login = () => {
               {!isPending && <button className="btn">Login</button>}
               {isPending && <button className="btn" disabled>loading</button>}
               {error && <p>{error}</p>}
-            </form>
 
+              <Links title='Create Account' ariaLabel='Create Account' href='#'/>
+            </form>
           </div>
         </div>)
       }

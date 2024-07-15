@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    justify-content: center;
+    width: auto;
+
+    .link {
+        color: #255BE3;
+        height: fit-content;
+    }
+
+    .link:hover,
+    .link:focus {
+        color: #0F1632;
+        text-decoration: none;
+    }
+
+    .link:focus-visible {
+        outline: 2px solid #255BE3;
+    }
+}
