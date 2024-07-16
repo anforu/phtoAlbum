@@ -1,0 +1,28 @@
+@use "../../globals/mixins.scss" as *;
+
+.hideNav {
+    display: none;
+}
+
+.navbar {
+    $comp: &;
+    width: 100%;
+    background: #effaf0;
+    padding: 10px;
+    box-sizing: border-box;
+
+    #{$comp}__container {
+        display: flex;
+        margin: 0 auto;
+        max-width: 960px;
+        align-items: center;
+        justify-content: space-between;
+
+        #{$comp}__title {
+            margin-right: auto;
+            font-weight: bold;
+            letter-spacing: 1px;
+            font-size: 1.2em;
+        }
+    }
+}

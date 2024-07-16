@@ -1,5 +1,5 @@
 import { BallTriangle, RotatingLines } from 'react-loader-spinner'
-import "./Spinner.css";
+import "./Spinner.scss";
 
 const Spinner = props => {
 

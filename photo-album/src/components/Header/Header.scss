@@ -1,0 +1,102 @@
+@use "../../globals/mixins.scss" as *;
+
+.headerHero {
+    $comp: &;
+    width: 100%;
+
+    #{$comp}__item {
+        height: 243px;
+        position: relative;
+
+        @include larger-than(tablet) {
+            height: 285px;
+        }
+
+        #{$comp}__image {
+            width: 100%;
+            height: 243px;
+            object-fit: cover;
+
+            @include larger-than(tablet) {
+                height: 285px;
+            }
+        }
+
+        #{$comp}__cover {
+            padding: 75px 0;
+            position: absolute;
+            width: 100%;
+            height: 243px;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            @include larger-than(tablet) {
+                height: 100%;
+            }
+
+            #{$comp}__header-content {
+                position: relative;
+                padding: 20px;
+                overflow: hidden;
+                margin-left: 10px;
+    
+                #{$comp}__line {
+                    content: "";
+                    display: inline-block;
+                    width: 100%;
+                    height: 100%;
+                    left: 0;
+                    top: 0;
+                    position: absolute;
+                    border: 9px solid #fff;
+                    -webkit-clip-path: polygon(0 0, 60% 0, 36% 100%, 0 100%);
+                    clip-path: polygon(0 0, 60% 0, 36% 100%, 0 100%);
+                }
+                
+                h1 {
+                    font-size: 18px;
+                    font-weight: 600;
+                    margin: 0;
+                    word-spacing: 3px;
+                    color: #fff;
+    
+                    @include larger-than(tablet) {
+                        font-size: 24px;
+                    }
+                }
+
+                h2 {
+                    font-weight: 300;
+                    font-size: 30px;
+                    color: #fff;
+                    margin: 0;
+    
+                    @include larger-than(tablet) {
+                        font-size: 45px;
+                    }
+    
+                    @include larger-than(lgtablet) {
+                        font-size: 30px;
+    
+                    }
+                }
+    
+                h3 {
+                    font-size: 14px;
+                    font-weight: 300;
+                    line-height: 36px;
+                    color: #fff;
+                    margin: 0;
+    
+                    @include larger-than(tablet) {
+                        font-size: 18px;
+                    }
+                }
+            }
+        }
+    }
+}

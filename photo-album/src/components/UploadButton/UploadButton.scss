@@ -1,4 +1,13 @@
+@use "../../globals/mixins.scss" as *;
 .loadImage {
+    $comp: &;
+    
+    /* web styles */
+    --b: 3px;
+    /* border thickness */
+    --s: .15em;
+    /* size of the corner */
+    --c: #BD5532;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -8,19 +17,26 @@
         font-size: 16px;
         padding: 20px;
     }
-    @media (min-width:768px) {
+
+    @include larger-than(tablet) {
         .title-button {
             padding: 15px;
             font-size: 25px;
         }
     }
 
-    /* web styles */
-    --b: 3px;
-    /* border thickness */
-    --s: .15em;
-    /* size of the corner */
-    --c: #BD5532;
+    &:hover, &:focus-visible {
+        --_p: 0px;
+        outline-color: var(--c);
+        outline-offset: .05em;
+    }
+
+    &:active {
+        background: var(--c);
+        color: #fff;
+    }
+
+    
 
     padding: calc(.05em + var(--s)) calc(.3em + var(--s));
     color: var(--c);
@@ -41,16 +57,4 @@
     margin: .1em;
 
 
-}
-
-button:hover,
-button:focus-visible {
-    --_p: 0px;
-    outline-color: var(--c);
-    outline-offset: .05em;
-}
-
-button:active {
-    background: var(--c);
-    color: #fff;
 }

@@ -1,17 +1,17 @@
-import './Input.css'
+import './Input.scss'
 
 const Input = props => {
 
     return (
-        <div className="container-custom-input">
+        <div className="container-input">
             <input
-                className='input'
+                className='container-input__input'
                 type={props.type}
                 id={props.id}
                 required onChange={props.onChange}
                 value={props.value}
                 placeholder={props.placeholder} />
-            <label className='title-input'>
+            <label className='container-input__title'>
                 {props.title}
             </label>
         </div>

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useSignup } from "../../hooks/useSignup";
-import './Signup.css'
+import './Signup.scss'
 import Spinner from '../../components/Spinner/Spinner'
 import Album from '../../assets/familiar-album.jpeg'
 import Input from "../../components/Input/Input";
-
+import CustomButton from "../../components/CustomButton/CustomButton";
 
 const Signup = () => {
 
@@ -27,14 +27,14 @@ const Signup = () => {
         (
           <div className="signup">
 
-            <div className="container-image-form-signup">
+            <div className="signup__container-image-form-signup">
 
 
-              <div className="photo-signup">
-                <img className="image-signup" src={Album} />
+              <div className="signup__photo-signup">
+                <img className="signup__image-signup" src={Album} />
               </div>
-              <form onSubmit={handleSubmit} className="signup-form">
-                <h2 className="no-margin-padding">Signup</h2>
+              <form onSubmit={handleSubmit} className="signup__signup-form" data-lpignore="true">
+                <h2 className="signup__no-margin-padding">Signup</h2>
 
                 <Input title="Email"
                   type="email"
@@ -49,8 +49,8 @@ const Signup = () => {
                   value={displayName} />
 
 
-                {!isPending && <button className="btn">Signup</button>}
-                {isPending && <button className="btn" disabled>loading</button>}
+                {!isPending && <CustomButton title='Signup'/>}
+                {isPending && <CustomButton disabled title='loading'/>}
                 {error && <p>{error}</p>}
               </form>
             </div>

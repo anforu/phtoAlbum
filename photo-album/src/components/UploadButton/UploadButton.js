@@ -1,5 +1,5 @@
 import Add from '../../assets/add.png'
-import './UploadButton.css'
+import './UploadButton.scss'
 
 const UploadButton = props => {
 

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { CSSTransition } from "react-transition-group";
-import "./Modal.css";
+import "./Modal.scss";
 
 const Modal = props => {
   const closeOnEscapeKeyDown = e => {

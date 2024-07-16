@@ -11,7 +11,7 @@ import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
-import './Pictures.css'
+import './Pictures.scss'
 import Spinner from '../../components/Spinner/Spinner'
 import UploadButton from "../../components/UploadButton/UploadButton";
 import DropContainer from "../../components/DropContainer/DropContainer"
@@ -22,6 +22,7 @@ const Pictures = () => {
     const [imageUpload, setImageUpload] = useState(null);
     const [imageList, setImageList] = useState([])
     const [loading, setLoading] = useState(false)
+    const breakpoints = [1080, 640, 384, 256, 128, 96, 64, 48];
     
     /**Function responsable to load the images to the firebase and a local state */
     const uploadImage = () => {
@@ -57,22 +58,35 @@ const Pictures = () => {
         return photo
     })
 
-    const slides = newPhotosUpdated.map(({ src, width, height, images }) => ({ src, width, height, srcSet: images }));
+     const slides = newPhotosUpdated.map(({ src, width, height, images }) => ({ src, width, height, srcSet: images }));
+    // const slides = newPhotosUpdated.map(
+    //     ({ asset, width, height, images }) =>
+    //       ({
+    //         src: images,
+    //         width,
+    //         height,
+    //         srcSet: breakpoints.map((breakpoint) => ({
+    //           src: images,
+    //           width: breakpoint,
+    //           height: Math.round((height / width) * breakpoint),
+    //         })),
+    //       }) 
+    //   );
     const [index, setIndex] = useState(-1);
 
     return (
         <>
             {/* {loading ? (<Spinner type='triangle' visible={loading} />) : */}
-            (<div>
+            <div>
                 <div className="pictures">
-                    <div className="container-load-images">
+                    <div className="pictures__container-load-images">
                         <DropContainer onChange={(event) => {
                             setImageUpload(event.target.files[0])
                         }} />
                         <UploadButton title="Upload Image"
                             onClick={uploadImage} />
                     </div>
-                    <div className="images">
+                    <div className="pictures__images">
                         <PhotoAlbum photos={newPhotosUpdated} layout="rows" targetRowHeight={150} onClick={({ index }) => setIndex(index)} />
                     </div>
                 </div>
@@ -86,7 +100,7 @@ const Pictures = () => {
                         plugins={[Fullscreen, Slideshow, Thumbnails, Zoom]}
                     />
                 }
-            </div>)
+            </div>
             {/* } */}
         </>
     );

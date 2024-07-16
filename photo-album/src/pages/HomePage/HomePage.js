@@ -3,7 +3,7 @@ import Footer from '../../components/Footer/Footer'
 import Pet from '../../assets/pets.jpeg';
 import { useNavigate } from 'react-router-dom';
 import Modal from "../../components/Modal/Modal";
-import './HomePage.css';
+import './HomePage.scss';
 import { ref, listAll } from "firebase/storage"
 import { storage } from "../../firebase/config";
 import Spinner from '../../components/Spinner/Spinner'
@@ -56,44 +56,41 @@ const HomePage = () => {
     }
 
     return (
-        <>
-            (<div className="homepage">
-                <Header />
-                <div className="container" >
-                    {nameUpdated.map((album, index) => {
-                        return (
+        <div className="homepage">
+            <Header />
+            <div className="homepage__container" >
+                {nameUpdated.map((album, index) => {
+                    return (
+                        <div key={index}>
+                            {loading ? (<Spinner type='triangle' visible={loading} />) :
+                                <button className="homepage__container-album" key={index}
+                                    onClick={() => { index !== 0 ? openFolder(album, index) : setShow(true) }}>
+                                    <label className="homepage__title">{album}</label>
+                                    <img src={Pet} alt="photo" width="100" height="100" />
+                                </button>
+                            }
+                        </div>
+                    )
+                })
+                }
+            </div>
 
-                            <div>
-                                {loading ? (<Spinner type='triangle' visible={loading} />) :
-                                    <div className="container-album" key={index}
-                                        onClick={() => { index !== 0 ? openFolder(album, index) : setShow(true) }}>
-                                        <label>{album}</label>
-                                        <img src={Pet} alt="photo" width="100" height="100" />
-                                    </div>
-                                }
-                            </div>
-                        )
-                    })
-                    }
+            <Modal title='Title modal' show={show} onClose={() => setShow(false)}>
+                <div className="container-input">
+                    <label>Type a name:</label>
+                    <input
+                        value={albumNames}
+                        onChange={(e) => {
+                            setAlbumNames(e.target.value)
+                        }
+                        }
+                        placeholder="Name"
+                    />
+                    <button onClick={() => addFolders(albumNames)}>Add</button>
                 </div>
-
-                <Modal title='Title modal' show={show} onClose={() => setShow(false)}>
-                    <div className="container-input">
-                        <label>Type a name:</label>
-                        <input
-                            value={albumNames}
-                            onChange={(e) => {
-                                setAlbumNames(e.target.value)
-                            }
-                            }
-                            placeholder="Name"
-                        />
-                        <button onClick={() => addFolders(albumNames)}>Add</button>
-                    </div>
-                </Modal>
-                <Footer />
-            </div>)
-        </>
+            </Modal>
+            <Footer />
+        </div>
     )
 }
 export default HomePage;

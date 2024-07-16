@@ -1,0 +1,122 @@
+@use "sass:map";
+@use "sass:math";
+
+$mqs: (mobile: 321px, medmobile: 375px, lgmobile: 480px, tablet: 768px, lgtablet: 1024px, desktop: 1200px, lgdesktop: 1440px, xl: 1920px);
+
+// Screen breakpoints
+@mixin smaller-than($device) {
+    $width: map.get($mqs, $device);
+
+    @if $width {
+        @media only screen and (max-width: #{$width - 1}) {
+            @content;
+        }
+    } @else {
+        @error "Unknown breakpoint: #{$device}";
+    }
+}
+
+@mixin larger-than($device) {
+    $width: map.get($mqs, $device);
+
+    @if $width {
+        @media only screen and (min-width: $width) {
+            @content;
+        }
+    } @else {
+        @error "Unknown breakpoint: #{$device}";
+    }
+}
+
+@mixin between($smallest, $largest) {
+    $min-width: map.get($mqs, $smallest);
+    $max-width: map.get($mqs, $largest);
+
+    @if $min-width and $max-width  {
+        @media only screen and (min-width: $min-width) and (max-width: #{$max-width - 1}) {
+            @content;
+        }
+    } @else {
+        @if $min-width == null {
+            @error "Unknown breakpoint: #{$smallest}";
+        }
+        @if $max-width == null {
+            @error "Unknown breakpoint: #{$largest}";
+        }
+    }
+}
+
+@mixin for($breakpoint) {
+    @if $breakpoint=="mobile" {
+        @include smaller-than(tablet) {
+            @content;
+        }
+    } @else if $breakpoint=="tablet" {
+        @include between(tablet, desktop) {
+            @content;
+        }
+    } @else if $breakpoint=="desktop" {
+        @include larger-than(desktop) {
+            @content;
+        }
+    } @else {
+        @error "Unknown breakpoint: #{$breakpoint}";
+    }
+}
+
+// Print styles
+@mixin print() {
+    @media print {
+        @content;
+    }
+}
+
+// Touchscreen styles (IE11 does not recognize hover and pointer CSS media features)
+@mixin touchscreen() {
+    @media only screen and (hover: none) and (pointer: coarse) {
+        @content;
+    }
+}
+
+// Global Wrapper
+@mixin global-wrapper($mobWidth: false, $tabWidth: false, $dskWidth: false, $display: false) {
+    @if $display {
+        display: $display;
+    } @else {
+        display: block;
+    }
+
+    margin-left: auto;
+    margin-right: auto;
+
+    @include for(mobile) {
+        @if $mobWidth {
+            width: $mobWidth;
+        } @else {
+            width: 85%;
+        }
+    }
+
+    @include for(tablet) {
+        @if $tabWidth {
+            width: $tabWidth;
+        } @else {
+            width: 712px;
+        }
+    }
+
+    @include for(desktop) {
+        @if $dskWidth {
+            width: $dskWidth;
+        } @else {
+            width: 1128px;
+        }
+    }
+}
+
+// Units conversion
+@function toRem($value) {
+    $remValue: math.div($value, 16) + rem;
+
+    @return $remValue;
+}

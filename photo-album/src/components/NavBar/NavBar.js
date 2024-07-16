@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 import { useAuthContext } from '../../hooks/useAuthContext'
 import { useLogout } from '../../hooks/useLogout'
-import './NavBar.css'
+import CustomButton from '../CustomButton/CustomButton'
+import './NavBar.scss'
 
 export default function Navbar() {
     const { logout } = useLogout()
@@ -9,10 +10,10 @@ export default function Navbar() {
 
     return (
         <nav className={user ? 'navbar' : 'hideNav'}>
-            <ul>
+            <ul className='navbar__container'>
                 {!user && (
                     <>
-                        <li className='title'>Photos</li>
+                        <li className='navbar__title'>Photos</li>
                         <li><Link to="/">Login</Link></li>
                         <li><Link to="/signup">Signup</Link></li>
                     </>
@@ -22,7 +23,7 @@ export default function Navbar() {
                         <li>hello, {user.displayName}</li>
                         <li><Link to="/home">Home</Link></li>
                         <li>
-                            <button className='btn' onClick={logout}>Logout</button>
+                            <CustomButton title='Logout' onClick={logout}/>
                         </li>
                     </>
                 )}

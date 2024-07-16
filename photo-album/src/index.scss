@@ -1,3 +1,5 @@
+@use "./globals/mixins.scss" as *;
+
 html {
   box-sizing: border-box;
   /* convert 1rem to 10px */

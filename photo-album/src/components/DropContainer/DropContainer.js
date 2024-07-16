@@ -1,4 +1,4 @@
-import './DropContainer.css'
+import './DropContainer.scss'
 
 const DropContainer = props => {
     return (

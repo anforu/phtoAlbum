@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useLogin } from "../../hooks/useLogin";
-import "./Login.css";
+import "./Login.scss";
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../../components/Spinner/Spinner'
 import Album from '../../assets/familiar-album.jpeg'
 import Input from "../../components/Input/Input";
 import Links from '../../components/Links/Links'
+import CustomButton from '../../components/CustomButton/CustomButton'
+
 const Login = () => {
 
   const [email, setEmail] = useState('anye824@gmail.com');
@@ -27,17 +29,16 @@ const Login = () => {
   }
 
   return (
-    <>
+    <div>
       {loading ? (<Spinner type='triangle' visible={loading} />) :
         (<div className="login">
-
-          <div className="container-image-form">
-            <div className="photo">
-              <img className="image" src={Album} />
+          <div className="login__container-image-form">
+            <div className="login__photo">
+              <img className="login__image" src={Album} />
             </div>
 
-            <form onSubmit={handleSubmit} className="login-form">
-              <h2 className="no-margin-padding">Login</h2>
+            <form onSubmit={handleSubmit} className="login__form" data-lpignore="true">
+              <h2 className="login__no-margin-padding">Login</h2>
 
               <Input title="Email"
                 type="email"
@@ -47,16 +48,16 @@ const Login = () => {
               <Input title="Password" type="password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password} />
-              {!isPending && <button className="btn">Login</button>}
-              {isPending && <button className="btn" disabled>loading</button>}
+              {!isPending && <CustomButton title='Login' />}
+              {isPending && <CustomButton title='loading' disabled />}
               {error && <p>{error}</p>}
 
-              <Links title='Create Account' ariaLabel='Create Account' href='#'/>
+              <Links title='Create Account' ariaLabel='Create Account' href='/signup' />
             </form>
           </div>
         </div>)
       }
-    </>
+    </div>
   )
 }
 export default Login;

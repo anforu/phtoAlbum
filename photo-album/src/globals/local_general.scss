@@ -1,0 +1,21 @@
+@use "../globals/mixins.scss" as *;
+
+.only_mob {
+	@include for(mobile) {
+		display: block;
+	}
+	display: none;
+}
+.only_tab {
+	display: none;
+	@include for(tablet) {
+		display: block;
+	}
+}
+.only_dsk {
+	display: none;
+	@include for(desktop) {
+		display: block;
+	}
+}
+.nobr { white-space:nowrap; }

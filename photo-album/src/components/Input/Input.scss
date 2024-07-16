@@ -1,0 +1,49 @@
+@use "../../globals/mixins.scss" as *;
+
+.container-input {
+    $comp: &;
+
+    position: relative;
+    line-height: 14px;
+    margin: 0 10px;
+    display: inline-block;
+
+    #{$comp}__input {
+        font-size: 13px;
+        color: #555;
+        outline: none;
+        border: 1px solid #bbb;
+        padding: 10px 20px;
+        border-radius: 20px;
+        position: relative;
+        margin-bottom: 20px;
+
+        &:invalid+label {
+            transform: translateY(0);
+        }
+
+        &:focus {
+            border-color: #2b96f1;
+        }
+
+        &:focus+label {
+            color: #2b96f1;
+            transform: translateY(-20px);
+        }
+    }
+
+    #{$comp}__title {
+        color: #bbb;
+        font-size: 11px;
+        text-transform: uppercase;
+        position: absolute;
+        z-index: 2;
+        left: 20px;
+        top: 14px;
+        padding: 0 2px;
+        pointer-events: none;
+        background: white;
+        transition: transform 100ms ease;
+        transform: translateY(-20px);
+    }
+}
